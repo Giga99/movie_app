@@ -8,12 +8,12 @@ class WiredashApp extends StatelessWidget {
   final Widget child;
   final String languageCode;
 
-  const WiredashApp(
-      {Key key,
-      @required this.navigatorKey,
-      @required this.child,
-      @required this.languageCode})
-      : super(key: key);
+  const WiredashApp({
+    Key key,
+    @required this.navigatorKey,
+    @required this.child,
+    @required this.languageCode,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -23,8 +23,9 @@ class WiredashApp extends StatelessWidget {
       navigatorKey: navigatorKey,
       child: child,
       options: WiredashOptionsData(
-          showDebugFloatingEntryPoint: false,
-          locale: Locale.fromSubtags(languageCode: languageCode)),
+        showDebugFloatingEntryPoint: false,
+        locale: Locale.fromSubtags(languageCode: languageCode),
+      ),
       theme: WiredashThemeData(
         brightness: Brightness.dark,
         primaryColor: AppColor.royalBlue,

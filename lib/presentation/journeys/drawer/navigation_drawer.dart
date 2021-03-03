@@ -8,6 +8,7 @@ import 'package:movie_app/common/extensions/string_extensions.dart';
 import 'package:movie_app/presentation/blocs/language/language_bloc.dart';
 import 'package:movie_app/presentation/journeys/drawer/navigation_expanded_list_tile.dart';
 import 'package:movie_app/presentation/journeys/drawer/navigation_list_item.dart';
+import 'package:movie_app/presentation/widgets/app_dialog.dart';
 import 'package:movie_app/presentation/widgets/logo.dart';
 import 'package:wiredash/wiredash.dart';
 
@@ -63,9 +64,27 @@ class NavigationDrawer extends StatelessWidget {
             ),
             NavigationListItem(
               title: TranslationConstants.about.t(context),
-              onPressed: () {},
+              onPressed: () {
+                Navigator.of(context).pop();
+                _showDialog(context);
+              },
             ),
           ],
+        ),
+      ),
+    );
+  }
+
+  void _showDialog(BuildContext context) {
+    showDialog(
+      context: context,
+      child: AppDialog(
+        title: TranslationConstants.about,
+        description: TranslationConstants.aboutDescription,
+        buttonText: TranslationConstants.okay,
+        child: Image.asset(
+          'assets/pngs/tmdb_logo.png',
+          height: Sizes.dimen_32.h,
         ),
       ),
     );
