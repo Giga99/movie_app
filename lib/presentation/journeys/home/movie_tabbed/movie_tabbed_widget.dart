@@ -1,11 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:movie_app/common/constants/size_constants.dart';
+import 'package:movie_app/common/constants/translation_constants.dart';
 import 'package:movie_app/common/extensions/size_extensions.dart';
+import 'package:movie_app/common/extensions/string_extensions.dart';
 import 'package:movie_app/presentation/blocs/movie_tabbed/movie_tabbed_bloc.dart';
 import 'package:movie_app/presentation/journeys/home/movie_tabbed/movie_list_view_builder.dart';
 import 'package:movie_app/presentation/journeys/home/movie_tabbed/movie_tabbed_constants.dart';
 import 'package:movie_app/presentation/journeys/home/movie_tabbed/tab_title_widget.dart';
+import 'package:movie_app/presentation/widgets/app_error_widget.dart';
 
 class MovieTabbedWidget extends StatefulWidget {
   @override
@@ -53,9 +56,30 @@ class _MovieTabbedWidgetState extends State<MovieTabbedWidget>
                 ],
               ),
               if (state is MovieTabChanged)
+                state.movies?.isEmpty ?? true
+                    ? Expanded(
+                        child: Center(
+                          child: Text(
+                            TranslationConstants.noMovies.t(context),
+                            textAlign: TextAlign.center,
+                            style: Theme.of(context).textTheme.subtitle1,
+                          ),
+                        ),
+                      )
+                    : Expanded(
+                        child: MovieListViewBuilder(movies: state.movies),
+                      ),
+              if (state is MovieTabLoadError)
                 Expanded(
-                  child: MovieListViewBuilder(movies: state.movies),
-                )
+                  child: AppErrorWidget(
+                    errorType: state.errorType,
+                    onPressed: () => movieTabbedBloc.add(
+                      MovieTabChangedEvent(
+                        currentTabIndex: state.currentTabIndex,
+                      ),
+                    ),
+                  ),
+                ),
             ],
           ),
         );
