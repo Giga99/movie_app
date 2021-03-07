@@ -5,12 +5,14 @@ import 'package:movie_app/data/data_sources/movie_remote_data_source.dart';
 import 'package:movie_app/data/repositories/movie_repository_impl.dart';
 import 'package:movie_app/domain/repositories/movie_repository.dart';
 import 'package:movie_app/domain/usecases/get_coming_soon.dart';
+import 'package:movie_app/domain/usecases/get_movie_detail.dart';
 import 'package:movie_app/domain/usecases/get_playing_now.dart';
 import 'package:movie_app/domain/usecases/get_popular.dart';
 import 'package:movie_app/domain/usecases/get_trending.dart';
 import 'package:movie_app/presentation/blocs/language/language_bloc.dart';
 import 'package:movie_app/presentation/blocs/movie_backdrop/movie_backdrop_bloc.dart';
 import 'package:movie_app/presentation/blocs/movie_carousel/movie_carousel_bloc.dart';
+import 'package:movie_app/presentation/blocs/movie_detail/movie_detail_bloc.dart';
 import 'package:movie_app/presentation/blocs/movie_tabbed/movie_tabbed_bloc.dart';
 
 final getItInstance = GetIt.I;
@@ -36,6 +38,9 @@ Future init() async {
   getItInstance.registerLazySingleton<GetComingSoon>(
       () => GetComingSoon(getItInstance()));
 
+  getItInstance.registerLazySingleton<GetMovieDetail>(
+      () => GetMovieDetail(getItInstance()));
+
   getItInstance.registerLazySingleton<MovieRepository>(
       () => MovieRepositoryImpl(getItInstance()));
 
@@ -46,11 +51,19 @@ Future init() async {
 
   getItInstance.registerFactory(() => MovieBackdropBloc());
 
-  getItInstance.registerFactory(() => MovieTabbedBloc(
-        getPopular: GetPopular(getItInstance()),
-        getComingSoon: GetComingSoon(getItInstance()),
-        getPlayingNow: GetPlayingNow(getItInstance()),
-      ));
+  getItInstance.registerFactory(
+    () => MovieTabbedBloc(
+      getPopular: getItInstance(),
+      getComingSoon: getItInstance(),
+      getPlayingNow: getItInstance(),
+    ),
+  );
+
+  getItInstance.registerFactory(
+    () => MovieDetailBloc(
+      getMovieDetail: getItInstance(),
+    ),
+  );
 
   getItInstance.registerSingleton<LanguageBloc>(LanguageBloc());
 }
