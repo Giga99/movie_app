@@ -20,6 +20,8 @@ abstract class MovieRemoteDataSource {
   Future<List<CastModel>> getCastCrew(int id);
 
   Future<List<VideoModel>> getVideos(int id);
+
+  Future<List<MovieModel>> getSearchedMovies(String searchTerm);
 }
 
 class MovieRemoteDataSourceImpl extends MovieRemoteDataSource {
@@ -29,7 +31,7 @@ class MovieRemoteDataSourceImpl extends MovieRemoteDataSource {
 
   @override
   Future<List<MovieModel>> getTrending() async {
-    final response = await _client.get("trending/movie/day");
+    final response = await _client.get('trending/movie/day');
     final movies = MoviesResultModel.fromJson(response).movies;
 
     return movies;
@@ -37,7 +39,7 @@ class MovieRemoteDataSourceImpl extends MovieRemoteDataSource {
 
   @override
   Future<List<MovieModel>> getPopular() async {
-    final response = await _client.get("movie/popular");
+    final response = await _client.get('movie/popular');
     final movies = MoviesResultModel.fromJson(response).movies;
 
     return movies;
@@ -45,7 +47,7 @@ class MovieRemoteDataSourceImpl extends MovieRemoteDataSource {
 
   @override
   Future<List<MovieModel>> getComingSoon() async {
-    final response = await _client.get("movie/upcoming");
+    final response = await _client.get('movie/upcoming');
     final movies = MoviesResultModel.fromJson(response).movies;
 
     return movies;
@@ -53,7 +55,7 @@ class MovieRemoteDataSourceImpl extends MovieRemoteDataSource {
 
   @override
   Future<List<MovieModel>> getPlayingNow() async {
-    final response = await _client.get("movie/now_playing");
+    final response = await _client.get('movie/now_playing');
     final movies = MoviesResultModel.fromJson(response).movies;
 
     return movies;
@@ -81,5 +83,18 @@ class MovieRemoteDataSourceImpl extends MovieRemoteDataSource {
     final videos = VideoResultModel.fromJson(response).videos;
 
     return videos;
+  }
+
+  @override
+  Future<List<MovieModel>> getSearchedMovies(String searchTerm) async {
+    final response = await _client.get(
+      'search/movie',
+      params: {
+        'query': searchTerm,
+      },
+    );
+    final movies = MoviesResultModel.fromJson(response).movies;
+
+    return movies;
   }
 }
