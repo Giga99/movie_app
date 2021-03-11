@@ -2,15 +2,17 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:movie_app/common/constants/languages.dart';
+import 'package:movie_app/common/constants/route_constants.dart';
 import 'package:movie_app/common/screenutil/screenutil.dart';
 import 'package:movie_app/di/get_it.dart';
 import 'package:movie_app/presentation/blocs/language/language_bloc.dart';
+import 'package:movie_app/presentation/fade_page_route_builder.dart';
+import 'package:movie_app/presentation/routes.dart';
 import 'package:movie_app/presentation/themes/app_color.dart';
 import 'package:movie_app/presentation/themes/theme_text.dart';
 import 'package:movie_app/presentation/wiredash_app.dart';
 
 import 'app_localizations.dart';
-import 'journeys/home/home_screen.dart';
 
 class MovieApp extends StatefulWidget {
   final _navigatorKey = GlobalKey<NavigatorState>();
@@ -66,7 +68,18 @@ class _MovieAppState extends State<MovieApp> {
                   GlobalMaterialLocalizations.delegate,
                   GlobalWidgetsLocalizations.delegate,
                 ],
-                home: HomeScreen(),
+                builder: (context, child) {
+                  return child;
+                },
+                initialRoute: RouteList.initial,
+                onGenerateRoute: (RouteSettings settings) {
+                  final route = Routes.getRoutes(settings);
+                  final WidgetBuilder builder = route[settings.name];
+                  return FadePageRouteBuilder(
+                    builder: builder,
+                    settings: settings,
+                  );
+                },
               ),
             );
           return const SizedBox.shrink();
