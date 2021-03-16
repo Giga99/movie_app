@@ -6,8 +6,10 @@ import 'package:movie_app/presentation/journeys/home/movie_tabbed/movie_tab_card
 
 class MovieListViewBuilder extends StatelessWidget {
   final List<MovieEntity> movies;
+  final ScrollController scrollController;
 
-  const MovieListViewBuilder({Key key, @required this.movies})
+  const MovieListViewBuilder(
+      {Key key, @required this.movies, @required this.scrollController})
       : super(key: key);
 
   @override
@@ -15,6 +17,7 @@ class MovieListViewBuilder extends StatelessWidget {
     return Padding(
       padding: EdgeInsets.symmetric(vertical: Sizes.dimen_6.h),
       child: ListView.separated(
+        controller: scrollController,
         shrinkWrap: true,
         itemBuilder: (context, index) {
           final MovieEntity movie = movies[index];

@@ -11,6 +11,8 @@ import 'package:movie_app/presentation/journeys/home/movie_tabbed/tab_title_widg
 import 'package:movie_app/presentation/widgets/app_error_widget.dart';
 
 class MovieTabbedWidget extends StatefulWidget {
+  ScrollController _scrollController = new ScrollController();
+
   @override
   _MovieTabbedWidgetState createState() => _MovieTabbedWidgetState();
 }
@@ -67,7 +69,10 @@ class _MovieTabbedWidgetState extends State<MovieTabbedWidget>
                         ),
                       )
                     : Expanded(
-                        child: MovieListViewBuilder(movies: state.movies),
+                        child: MovieListViewBuilder(
+                          movies: state.movies,
+                          scrollController: widget._scrollController,
+                        ),
                       ),
               if (state is MovieTabLoadError)
                 Expanded(
@@ -89,5 +94,10 @@ class _MovieTabbedWidgetState extends State<MovieTabbedWidget>
 
   void _onTabTapped(int index) {
     movieTabbedBloc.add(MovieTabChangedEvent(currentTabIndex: index));
+    widget._scrollController.animateTo(
+      0.0,
+      curve: Curves.easeOut,
+      duration: const Duration(milliseconds: 300),
+    );
   }
 }
