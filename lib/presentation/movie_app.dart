@@ -50,7 +50,7 @@ class _MovieAppState extends State<MovieApp> {
               child: MaterialApp(
                 navigatorKey: widget._navigatorKey,
                 debugShowCheckedModeBanner: false,
-                title: 'Movie App',
+                title: 'Movie Trailers',
                 theme: ThemeData(
                   unselectedWidgetColor: AppColor.royalBlue,
                   primaryColor: AppColor.vulcan,
