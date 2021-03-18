@@ -42,3 +42,5 @@ app.*.map.json
 
 # API
 api_constants.dart
+
+google-services.json

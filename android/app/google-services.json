@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "316583020922",
+    "project_id": "movie-trailers-5b494",
+    "storage_bucket": "movie-trailers-5b494.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:316583020922:android:3376ad83f55c001bc36ec3",
+        "android_client_info": {
+          "package_name": "com.mt.movietrailers"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "316583020922-t0moqphf1jum7k1iqqqbm0tu03g031pk.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBIi25ZqYbsBg4GdcWDzyywFex8I4eUylw"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "316583020922-t0moqphf1jum7k1iqqqbm0tu03g031pk.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
